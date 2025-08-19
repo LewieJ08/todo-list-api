@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/LewieJ08/todo-list-api/issues"
   },
-  "homepage": "https://github.com/LewieJ08/todo-list-api#readme"
+  "homepage": "https://github.com/LewieJ08/todo-list-api#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }
