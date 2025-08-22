@@ -12,7 +12,14 @@ const createUser = async (req, res, next) => {
             data: user
         });
     } catch(error) {
-        next(error);
+        if (error.code === 11000) {
+            res.status(400).json({
+                success: false,
+                error: `User with username: ${req.body.username} already exists.`
+            });
+        } else {
+            next(error);
+        }
     }
 }
 
