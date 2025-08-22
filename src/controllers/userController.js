@@ -1,6 +1,17 @@
 const User = require("../models/user")
 
-const getUsers = async (req, res, next) => {}
+const getUsers = async (req, res, next) => {
+    try {
+        const users = await User.find();
+        res.status(200).json({
+            success: true,
+            message: "Users successfully fetched.",
+            data: users
+        });
+    } catch (error) {
+        next(error);
+    }
+}
 
 const createUser = async (req, res, next) => {
     try {
