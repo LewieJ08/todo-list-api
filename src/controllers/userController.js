@@ -1,4 +1,5 @@
-const User = require("../models/user")
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res, next) => {
     try {
@@ -15,7 +16,10 @@ const getUsers = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
     try {
-        const user = new User(req.body);
+        const {username, password} = req.body
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        const user = new User({username: username, password: hashedPassword});
         await user.save();
         res.status(201).json({
             success: true,
@@ -35,6 +39,6 @@ const createUser = async (req, res, next) => {
 }
 
 
-const loginUser = async () => {}
+const loginUser = async (req, res, next) => {}
 
 module.exports = {getUsers, createUser, loginUser};
