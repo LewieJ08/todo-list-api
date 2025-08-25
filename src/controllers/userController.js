@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const crypo = require("crypto")
 
 const getUsers = async (req, res, next) => {
     try {
@@ -16,8 +17,8 @@ const getUsers = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
     try {
-        const {username, password} = req.body
-        const hashedPassword = await bcrypt.hash(password, 10)
+        const {username, password} = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new User({username: username, hashedPassword: hashedPassword});
         await user.save();
@@ -27,6 +28,7 @@ const createUser = async (req, res, next) => {
             data: user
         });
     } catch(error) {
+        console.log(error.stack)
         if (error.code === 11000) {
             res.status(400).json({
                 success: false,
@@ -39,6 +41,41 @@ const createUser = async (req, res, next) => {
 }
 
 
-const loginUser = async (req, res, next) => {}
+const loginUser = async (req, res, next) => {
+    try {
+        const {username, password} = req.body;
+        const user = await User.findOne({username: username});
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                error: `User: '${username}' does not exist`
+            })
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
+        
+        if (!passwordMatch ) {
+            return res.status(401).json({
+                success: false,
+                error: "Incorrect password"
+            });
+        }
+
+        const token = crypo.randomBytes(16).toString("hex");
+        user.token = token;
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: `User, ${username} logged in successfully.`,
+            data: {
+                token: token
+            }
+        });
+    } catch(error) {
+            next(error);
+    }
+}
 
 module.exports = {getUsers, createUser, loginUser};
