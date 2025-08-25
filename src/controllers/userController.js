@@ -9,7 +9,7 @@ const getUsers = async (req, res, next) => {
             message: "Users successfully fetched.",
             data: users
         });
-    } catch (error) {
+    } catch(error) {
         next(error);
     }
 }
@@ -19,7 +19,7 @@ const createUser = async (req, res, next) => {
         const {username, password} = req.body
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const user = new User({username: username, password: hashedPassword});
+        const user = new User({username: username, hashedPassword: hashedPassword});
         await user.save();
         res.status(201).json({
             success: true,
