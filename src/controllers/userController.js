@@ -78,4 +78,20 @@ const loginUser = async (req, res, next) => {
     }
 }
 
-module.exports = {getUsers, createUser, loginUser};
+const logoutUser = async (req, res, next) => {
+    try {
+        const token = (req.headers.authorization).split(" ")[1];
+        const user = await User.findOne({token: token});
+
+        user.token = null;
+        await user.save();
+        res.status(200).json({
+            success: true,
+            message: `User, ${req.body.username} logged out successfully`
+        });
+    } catch(error) {
+        next(error);
+    }
+}
+
+module.exports = {getUsers, createUser, loginUser, logoutUser};
