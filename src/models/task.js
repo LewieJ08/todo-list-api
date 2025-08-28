@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { updateTask } = require("../controllers/taskController");
 
 const taskSchema = new mongoose.Schema({
     _userId: {
@@ -12,9 +13,15 @@ const taskSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        required: true,
         enum: ["pending","in-progress","done"],
         default: "pending"
+    },
+    createdAt: {
+        type: Date,
+        default: new Date()
+    },
+    updatedAt: {
+        type: Date,
     }
 });
 
