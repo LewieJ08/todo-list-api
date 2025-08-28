@@ -13,3 +13,5 @@ router.route("/:id")
     .get(taskController.getTask)
     .put(taskController.updateTask)
     .delete(taskController.deleteTask);
+
+module.exports = router
