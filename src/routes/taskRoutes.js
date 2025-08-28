@@ -2,7 +2,7 @@ const express = require("express");
 const taskController = require("../controllers/taskController");
 const mwAuth = require("../middleware/auth");
 
-const router = express.Router;
+const router = express.Router();
 router.use(mwAuth);
 
 router.route("/")
