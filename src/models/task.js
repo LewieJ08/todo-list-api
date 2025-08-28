@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { updateTask } = require("../controllers/taskController");
 
 const taskSchema = new mongoose.Schema({
     _userId: {
