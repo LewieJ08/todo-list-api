@@ -1,9 +1,14 @@
 const Task = require("../models/task");
 
 const getAllTasks = async (req, res, next) => {
-    // TODO filtering based on status prop
-    try {
-        const tasks = await Task.find({_userId: req.user._id});
+    try {  
+        let tasks
+        
+        if (!req.query.status) {
+            tasks = await Task.find({_userId: req.user._id});
+        } else {
+            tasks = await Task.find({_userId: req.user._id, status: req.query.status});
+        }
         res.status(200).json({
             success: true,
             message: `Tasks for ${req.user.username} fetched successfully`,
