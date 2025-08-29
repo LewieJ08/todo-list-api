@@ -55,9 +55,13 @@ const updateTask = async (req, res, next) => {
     }
 }
 
-const deleteTask = (req, res, next) => {
+const deleteTask = async (req, res, next) => {
     try {
-
+        await Task.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+            success: true,
+            message: "Task deleted successfully"
+        });
     } catch(error) {
         next(error);
     }
