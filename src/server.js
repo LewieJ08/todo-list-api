@@ -3,7 +3,7 @@ const connectDB = require("./config/db")
 const mwLogger = require("./middleware/logger");
 const mwErrorHandler = require("./middleware/errorHandler");
 const userRoutes = require("./routes/userRoutes");
-const taskRoutes = require("./routes/taskRoutes")
+const taskRoutes = require("./routes/taskRoutes");
 
 require("dotenv").config();
 const app = express();
