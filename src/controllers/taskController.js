@@ -1,6 +1,7 @@
 const Task = require("../models/task");
 
 const getAllTasks = async (req, res, next) => {
+    // TODO filtering based on status prop
     try {
         const tasks = await Task.find({_userId: req.user._id});
         res.status(200).json({
@@ -40,9 +41,15 @@ const createTask = async (req, res, next) => {
     }
 }
 
-const updateTask = (req, res, next) => {
+const updateTask = async (req, res, next) => {
     try {
-        // TODO create a middleware to check access to task by ID for (update, get ,delete)
+        await Task.findByIdAndUpdate(req.params.id, {...req.body, updatedAt: new Date()});
+        const task = await Task.findById(req.params.id);
+        res.status(200).json({
+            success: true,
+            message: "Task updated successfully.",
+            data: task
+        });
     } catch(error) {
         next(error);
     }
