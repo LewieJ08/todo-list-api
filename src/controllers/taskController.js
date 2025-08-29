@@ -2,8 +2,8 @@ const Task = require("../models/task");
 
 const getAllTasks = async (req, res, next) => {
     try {  
-        let tasks
-        
+        let tasks;
+
         if (!req.query.status) {
             tasks = await Task.find({_userId: req.user._id});
         } else {
@@ -73,4 +73,4 @@ const deleteTask = async (req, res, next) => {
 }
 
 
-module.exports = {getAllTasks, getTask, createTask, updateTask, deleteTask}
+module.exports = {getAllTasks, getTask, createTask, updateTask, deleteTask};

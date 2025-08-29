@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const crypo = require("crypto")
+const crypo = require("crypto");
 
 const getUsers = async (req, res, next) => {
     try {
@@ -50,7 +50,7 @@ const loginUser = async (req, res, next) => {
             return res.status(401).json({
                 success: false,
                 error: `User: '${username}' does not exist`
-            })
+            });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
