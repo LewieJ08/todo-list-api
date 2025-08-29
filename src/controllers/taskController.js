@@ -13,9 +13,22 @@ const getAllTasks = async (req, res, next) => {
     }
 }
 
-const getTask = (req, res, next) => {
+const getTask = async (req, res, next) => {
     try {
+        const task = await Task.findById(req.params.id);
 
+        if (!(task._userId).equals(req.user._id)) {
+            return res.status(401).json({
+                success: false,
+                error: `User, ${req.user.username} does not have access to task with ID: ${req.params.id}`
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Task with ID: ${req.params.id} fetched successfully`,
+            data: task
+        });
     } catch(error) {
         next(error);
     }
