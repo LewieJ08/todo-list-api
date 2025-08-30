@@ -34,4 +34,10 @@ This project goes a step beyond my previous **Blog API** by adding **users**, **
 
 ## 📄 Task Endpoints
 
-> Task Endpoints under development
+| Method | Endpoint          | Description                         |
+|--------|-------------------|-------------------------------------|
+| GET    | `/tasks`          | Get all tasks for current user      |
+| POST   | `/tasks`          | Create a new task                   |
+| GET    | `/tasks/:id`      | Get a task by ID                    |
+| PUT    | `/tasks/:id`      | Update an existing task             |
+| DELETE | `/tasks/:id`      | Delete a task                       |
